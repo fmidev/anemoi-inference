@@ -6,12 +6,13 @@ from functools import cached_property
 import numpy as np
 import torch
 from anemoi.inference.checkpoint import Checkpoint
-from anemoi.inference.runner import Runner, RunnerClasses
+from anemoi.inference.runner import RunnerClasses
 from anemoi.utils.dates import frequency_to_timedelta
 
 from anemoi.models.models.predictive_autoencoder import AnemoiModelPredictiveAutoEncoder
 
 from . import runner_registry
+from .default import DefaultRunner
 
 
 class PredictiveCheckpoint(Checkpoint):
@@ -33,7 +34,7 @@ class PredictiveCheckpoint(Checkpoint):
 
 
 @runner_registry.register("predictive-autoencoder")
-class PredictiveAutoencoderRunner(Runner):
+class PredictiveAutoencoderRunner(DefaultRunner):
     """Encode initial conditions once and retain the latent state during rollout."""
 
     def __init__(self, config):
