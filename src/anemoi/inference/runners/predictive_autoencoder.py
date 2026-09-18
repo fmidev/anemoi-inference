@@ -76,7 +76,7 @@ class PredictiveAutoencoderRunner(DefaultRunner):
             current, shards = core.encode_snapshot(initial, int(core.use_previous_state), batch_size=1)
             static, _ = core.encode_static_forcing_context(initial, batch_size=1)
             del initial
-            states = {name: dict(state) for name, state in input_states.items()}
+            states = {name: {**state, "step": timestep * 0} for name, state in input_states.items()}
             for step in range(1, int(steps) + 1):
                 date = start + step * timestep
                 for name, handler in self.tensor_handlers.items():
